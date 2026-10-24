@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Lança Certo</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Figtree:wght@400;500;600;700&family=JetBrains+Mono:wght@500;700;800&display=swap">
+<link rel="stylesheet" href="css/lanca-certo.css">
+</head>
+<body>
+
+<div class="wrap">
+
+  <!-- HOME -->
+  <section id="home" class="screen">
+    <div class="hero">
+      <div>
+        <span class="eyebrow">Faturamento fiscal · Unidade Morada do Sol</span>
+        <h1>Lança <span class="mark">Certo</span></h1>
+        <p class="lede">O jogo da entrada de nota fiscal. Escolha o depósito, a forma de pagamento, o tipo de entrada, o CFOP e o CST. Errou? A explicação aparece na hora.</p>
+        <div class="hero-actions">
+          <button class="btn hl" id="play">Jogar partida · 12 rodadas <span class="k">Enter</span></button>
+          <span class="best" id="best"></span>
+        </div>
+      </div>
+      <div class="stack" aria-hidden="true">
+        <div class="paper p1">
+          <div class="ph"><span>DANFE</span><span>Nº 000771285</span></div>
+          <div class="row"><span>CFOP na nota</span><b>5.401</b></div>
+          <div class="row"><span>CST no XML</span><b>560</b></div>
+          <div class="row"><span>Cobrança</span><b>Boleto</b></div>
+          <div class="bars"></div>
+        </div>
+        <div class="paper p2">
+          <div class="ph"><span>ENTRADA</span><span>Morada do Sol</span></div>
+          <div class="row"><span>Depósito</span><b>LOJA</b></div>
+          <div class="row"><span>Pagamento</span><b>A Prazo</b></div>
+          <div class="row"><span>Tipo</span><b>Revenda</b></div>
+          <div class="row"><span>CFOP · CST</span><b>1.403 · 060</b></div>
+        </div>
+        <div class="stamp">LANÇADO</div>
+      </div>
+    </div>
+
+    <div class="ticker" aria-hidden="true"><div class="ticker-track" id="ticker"></div></div>
+
+    <div class="sec-title">
+      <h2>Treine por fase</h2>
+      <p>Cada fase foca em uma regra do guia. A partida completa mistura todas.</p>
+    </div>
+    <div class="phases" id="phases"></div>
+
+    <div class="how">
+      <div><b>Combo</b><span>Acerte rodadas inteiras em sequência e os pontos sobem até 2×.</span></div>
+      <div><b>Relógio</b><span>Separar mercadoria e os macetes rápidos são contra o tempo.</span></div>
+      <div><b>Revisão</b><span>No fim, cada erro volta com a regra do guia ao lado.</span></div>
+    </div>
+  </section>
+
+  <!-- GAME -->
+  <section id="game" class="screen" hidden style="padding-top:0">
+    <div class="hud">
+      <button class="iconbtn" id="quit" aria-label="Sair para o início">Sair</button>
+      <div class="prog" id="prog"></div>
+      <span class="combo" id="combo" hidden></span>
+      <button class="iconbtn" id="mute" aria-label="Som">Som: on</button>
+      <div class="score"><span id="score" data-v="0">0</span><small>pontos</small></div>
+    </div>
+    <div class="stage" id="stage"></div>
+  </section>
+
+  <!-- END -->
+  <section id="end" class="screen" hidden></section>
+</div>
+
+<div class="scrim" id="scrim"></div>
+<div class="sheet" id="sheet" role="dialog" aria-live="polite" aria-label="Resultado da rodada"><div class="sheet-in" id="sheetIn"></div></div>
+
+<script src="js/lanca-certo.js"></script>
+
+</body>
+</html>
