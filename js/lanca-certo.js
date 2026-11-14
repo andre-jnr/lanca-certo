@@ -187,6 +187,46 @@ const MC = [
   ['Material de uso e consumo vindo do CD. Qual CFOP?', ['1.557', '1.556', '1.152', '1.409'], 'Uso e consumo em transferência tem código próprio: 1.557.'],
   ['O fornecedor mandou o boleto junto da nota. Forma de pagamento?', ['A Prazo', 'A Vista', 'Bonificação', 'Transferência'], 'Boleto é A Prazo. Transferência bancária é A Vista.']
 ];
+// Multiplicador (Produto x Fornecedor). Itens reais de entradas da Morada do Sol (jul–nov/2026).
+// [nosso cód., nossa descrição, cód. fornecedor, descrição do fornecedor, unidade na nota, multiplicador, grupo, explicação]
+// grupo: k = UN/KG (sempre 1) · c = conta unidades · w = peso da caixa ÷ peso da nossa unidade · g = vendemos a quilo (kg da caixa) · d = display · o = outras embalagens
+const MULT = [
+  ['2038', 'LARANJA BAHIA KG', '52', 'LARANJA BAHIA A GRANEL', 'KG', 1, 'k'],
+  ['876', 'PEITO PERU DEF SADIA KG', '500130', 'PEITO PERU DEFUMADO SADIA PECA', 'KG', 1, 'k', 'Veio em KG: o peso da nota já é a quantidade. Multiplicador 1.'],
+  ['13860', 'CAFE MELITTA 250G SH TRAD', '7891021006088', 'CAFE MELITTA TRADICIONAL 250G', 'UN', 1, 'k'],
+  ['28281', 'OVO IBIKUARA COM 30', '00066', 'OVOS BRANCOS GRANDES BANDEJA C/30', 'UN', 1, 'k', 'Veio em UN: uma bandeja de 30, igual à nossa. Multiplicador 1.'],
+  ['22043', 'ACENDEDOR GEL FIAT LUX 420G', '364', 'ACENDEDOR GEL FIAT LUX 420G', 'UN', 1, 'k'],
+  ['29121', 'PULVERIZ 1,2L PRESSAO MANUAL GUARANY', '10382', 'PULVERIZADOR GUARANY 1,2L PRESSAO', 'UN', 1, 'k'],
+  ['29109', 'PEPSI COLA LT 269ML', '0014842', 'REFRIG PEPSI COLA LATA 269ML CX C/15', 'CX', 15, 'c'],
+  ['3919', 'FILE DE PEITO SADIA IQF 1KG', '470813', 'FILE PEITO FGO IQF SADIA 1KG CX 12UN', 'CX', 12, 'c'],
+  ['19378', 'QUEIJO PRATO FATIADO 150G SADIA', '761062', 'QJO PRATO FATIADO SADIA 150G CX C/28', 'CX', 28, 'c'],
+  ['6483', 'SALAME HAMBURGUES FATIADO SADIA 100GR', '500711', 'SALAME HAMBURGUES FAT SADIA 100G CX 30UN', 'CX', 30, 'c'],
+  ['29159', 'MOLHO ITALIAN BS 18G SACHET', '002560', 'MOLHO ITALIANO SACHE 18G CX C/120', 'CX', 120, 'c'],
+  ['28281', 'OVO IBIKUARA COM 30', '00066', 'OVOS BRANCOS GRANDES CX C/360 UN', 'CX', 12, 'c', '360 ovos ÷ 30 por bandeja = 12 bandejas.'],
+  ['29116', 'CAFE CAPPUCCINO 3 CORACOES BAUNILHA', '12034', 'CAPPUCCINO 3 CORACOES BAUNILHA 20G CX 5DP X 10UN', 'CX', 50, 'c', '5 displays × 10 unidades = 50.'],
+  ['3585', 'PAO DE QUEIJO TRAD. F. MINAS 400G', '17020', 'PAO DE QUEIJO TRAD FORNO DE MINAS CX 10,4KG', 'CX', 26, 'w', '10,4 kg ÷ 0,4 kg (400 g) = 26 pacotes.'],
+  ['9669', 'PAO DE QIJ LANCHE PERDIGAO 900G', '506541', 'PAO DE QUEIJO LANCHE PERDIGAO CX 9KG', 'CX', 10, 'w', '9 kg ÷ 0,9 kg (900 g) = 10 pacotes.'],
+  ['2658', 'LING.TOSCANA C/QUEIJO COALHO NA BRASA PD 600G', '485781', 'LING TOSCANA QJO COALHO PERDIGAO CX 7,2KG', 'CX', 12, 'w', '7,2 kg ÷ 0,6 kg (600 g) = 12 bandejas.'],
+  ['660', 'FILÉ DE PEITO FRANGO KG', '353', 'FILE PEITO FRANGO CONGELADO CX 15KG', 'CX', 15, 'g', 'Vendemos por KG e a caixa tem 15 kg: multiplicador 15.'],
+  ['2048', 'MANGA TOMMY KG', '137', 'MANGA TOMMY CX 18KG', 'CX', 18, 'g', 'Vendemos por KG e a caixa tem 18 kg: multiplicador 18.'],
+  ['2077', 'REPOLHO VERDE KG', '19', 'REPOLHO VERDE CX 20KG', 'CX', 20, 'g', 'Vendemos por KG e a caixa tem 20 kg: multiplicador 20.'],
+  ['1505', 'CALABRESA PERDIGAO KG', '219711', 'LING CALABRESA PERDIGAO CX 18KG', 'CX', 18, 'g', 'Vendemos por KG e a caixa tem 18 kg: multiplicador 18.'],
+  ['859', 'MORTADELA DEF OURO PERDIGAO KG', '239706', 'MORTADELA OURO PERDIGAO CX 2PC X 4KG', 'CX', 8, 'g', '2 peças × 4 kg = 8 kg na caixa, e vendemos por KG: 8.'],
+  ['29213', 'BOLINHO CHOCOLATE 40G', '003634', 'BOLINHO CHOCOLATE 40G DISPLAY C/16', 'DP', 16, 'd'],
+  ['28338', 'BOLD PISTACHE 40 G', '222997', 'BARRA PROTEINA BOLD PISTACHE 40G DP 12UN', 'DP', 12, 'd'],
+  ['28352', 'ISQUEIRO MAXI J6 BIC', '005920', 'ISQUEIRO BIC MAXI J6 DP C/50', 'DP', 50, 'd'],
+  ['29329', 'BANANA PASSA DPL 09X86G', '9675', 'BANANA PASSA 86G DP 09X86G', 'DP', 9, 'd', 'Display 09X86G: 9 unidades de 86 g.'],
+  ['28208', 'COOKIES BEL ZERO GOTAS CHOC 67G', '12065', 'COOKIES BELIVE ZERO GOTAS CHOC 67G DP C/10', 'DP', 10, 'd'],
+  ['29144', 'CALZONE DE SALSICHA LANCHE', '337', 'CALZONE SALSICHA CONG PT C/10UN', 'PT', 10, 'o'],
+  ['21978', 'BALA CARAMELO', '82680', 'BALA CARAMELO EMBARE 660G PT C/100', 'PT', 100, 'o', 'O pacote de 660 g traz 100 balas e vendemos a bala: 100.'],
+  ['8720', 'LEITE FERM TRAD CHAMYTO', '2250', 'LEITE FERM CHAMYTO TRAD 80G PC C/6', 'PC', 6, 'o'],
+  ['4215', 'POLPA DE ACEROLA NATURALLY 100G', '12', 'POLPA ACEROLA NATURALLY PC 10X100G', 'PC', 10, 'o'],
+  ['29351', 'LOOK MAIS WAFER DUO MORANGO 20G', '2260', 'WAFER LOOK MAIS DUO MORANGO 20G PCT C/16', 'PCT', 16, 'o'],
+  ['4159', 'AGUA MINERAL YARA 350ML', '0000000322', 'AGUA MINERAL YARA S/GAS 350ML EMB C/12', 'EB', 12, 'o'],
+  ['10260', 'AGUA CRIM PREMIUM 2L', '0000004011', 'AGUA MINERAL CRIM PREMIUM 2L EMB C/9', 'EB', 9, 'o']
+];
+const UNIDADES = { UN: 'unidade', KG: 'quilo', CX: 'caixa', DP: 'display', PT: 'pacote', PC: 'pacote', PCT: 'pacote', EB: 'embalagem (fardo)' };
+
 const CNPJ_WRONG = ['19.234.190/0001-25', '19.234.190/0007-52', '19.243.190/0007-25', '19.234.109/0007-25', '19.234.190/0070-25', '91.234.190/0007-25'];
 
 /* ================= geradores de rodada ================= */
@@ -241,6 +281,19 @@ const FIN_CASES = [
   { ctx: 'Nota de PAPELARIA CENTRAL com boleto anexo, vencimento impresso 28/11/2026.', conta: '45730', venc: 'Conforme o boleto físico', why: 'Boleto: conta 45730, vencimento conforme o boleto físico.' }
 ];
 function mkFin() { return FIN_CASES[Math.random() * FIN_CASES.length | 0]; }
+function mkMult(n = 5) {
+  // um de cada tipo (UN/KG, caixa contada, caixa por peso, display, outra embalagem), sem repetir produto
+  const groups = [['k'], ['c'], ['w', 'g'], ['d'], ['o'], ['c', 'w', 'g', 'd', 'o']].slice(0, n);
+  const used = new Set(), rows = [];
+  groups.forEach(g => {
+    const it = shuffle(MULT.filter(m => g.includes(m[6]) && !used.has(m[0])))[0];
+    if (!it) return;
+    used.add(it[0]);
+    const [cod, desc, codF, descF, un, mult, grp, why] = it;
+    rows.push({ cod, desc, codF, descF, un, mult, why: why || (grp === 'k' ? `Veio em ${un}: multiplicador 1.` : `A embalagem (${un}) traz ${mult} unidades: multiplicador ${mult}.`) });
+  });
+  return { rows: shuffle(rows) };
+}
 
 function buildPlan(mode) {
   const sys = () => ({ type: 'system', data: mkSystem(SCEN[Math.random() * SCEN.length | 0]) });
@@ -253,9 +306,10 @@ function buildPlan(mode) {
         { type: 'sort', data: mkSort(7) }, s[0], { type: 'rapid', data: mkRapid('cst', 5) }, s[1],
         mcR({ q: mcs[0], o: shuffle(mcs[1]), a: mcs[1][0], why: mcs[2], title: 'Pergunta do guia' }),
         { type: 'cnpj', data: mkCnpj() }, s[2], { type: 'tf', data: mkTF(5) }, { type: 'fin', data: mkFin() },
-        { type: 'rapid', data: mkRapid('cfop', 5) }, mcR(mkMarkup()), s[3]
+        { type: 'rapid', data: mkRapid('cfop', 5) }, { type: 'mult', data: mkMult(5) }, mcR(mkMarkup()), s[3]
       ];
     }
+    case 'mult': return [0, 1, 2].map(() => ({ type: 'mult', data: mkMult(5) }));
     case 'system': return sysN(5);
     case 'sort': return [{ type: 'sort', data: mkSort(8) }, { type: 'sort', data: mkSort(8) }];
     case 'cst': return [{ type: 'rapid', data: mkRapid('macete', 6) }, { type: 'rapid', data: mkRapid('simples', 6) }];
@@ -273,12 +327,13 @@ const PHASES = [
   { k: 'sort', t: 'Separe a mercadoria', d: 'Revenda, uso e consumo ou patrimônio? Contra o relógio.', g: 'LOJA' },
   { k: 'cst', t: 'Macete do CST', d: '540 vira 040. E no Simples Nacional, qual vai?', g: '<s>5</s>40' },
   { k: 'cfop', t: 'CFOP certo', d: 'Troca de industrialização, serviço e transferência.', g: '1.403' },
+  { k: 'mult', t: 'Multiplicador', d: 'Quantas unidades vêm na caixa, no display ou no pacote?', g: 'CX ×12' },
   { k: 'tf', t: 'Verdadeiro ou falso', d: 'Afirmações do guia, uma de cada vez.', g: 'V / F' },
   { k: 'cnpj', t: 'Confira o CNPJ', d: 'Ache o documento que não é da Morada do Sol.', g: '/0007' },
   { k: 'markup', t: 'Markup na ponta do lápis', d: 'Custo × 1,6667 = preço de venda.', g: '66,67%' },
   { k: 'fin', t: 'Financeiro', d: 'Conta corrente e vencimento de cada caso.', g: '45730' }
 ];
-const TYPE_LABEL = { system: 'Tela do sistema', sort: 'Separe a mercadoria', rapid: 'Rápido', tf: 'Verdadeiro ou falso', cnpj: 'Confira o CNPJ', mc: 'Pergunta', fin: 'Financeiro' };
+const TYPE_LABEL = { system: 'Tela do sistema', sort: 'Separe a mercadoria', rapid: 'Rápido', tf: 'Verdadeiro ou falso', cnpj: 'Confira o CNPJ', mc: 'Pergunta', fin: 'Financeiro', mult: 'Multiplicador' };
 
 /* ================= som ================= */
 let actx = null, soundOn = true;
@@ -707,6 +762,56 @@ R.fin = (d, el, done) => {
     });
     $('#gravar', el).disabled = true;
     later(() => done({ title: 'Financeiro', frac: lines.filter(l => l.ok).length / 2, lines, why: d.why }), 500);
+  };
+};
+
+/* ---- multiplicador ---- */
+R.mult = (d, el, done) => {
+  el.innerHTML = head('Multiplicador', 'Quantas unidades vêm na embalagem?', 'Compare a nossa descrição com a do fornecedor e digite o multiplicador de cada item. Depois clique em <b>Gravar</b>.') + `
+    <div class="card mult-rule">
+      <span><b>UN</b> ou <b>KG</b> → multiplicador <b>1</b></span>
+      <span><b>CX</b>, <b>DP</b> e outras embalagens → quantas das nossas unidades vêm dentro</span>
+      <span>Ex.: OVOS COM 18 × CX 360 OVOS → <b>20</b> cartelas</span>
+      <span>Ex.: PRODUTO 300G × CX 3KG → <b>10</b></span>
+    </div>
+    <div class="win" id="win">
+      <div class="win-title"><span>Produto x Fornecedor · Conversão de unidade</span><span class="win-dots" aria-hidden="true"><i></i><i></i><i></i></span></div>
+      <div class="mtable-wrap"><table class="mtable">
+        <thead><tr><th>Cód.</th><th>Descrição (nossa)</th><th>Cód. forn.</th><th>Descrição do fornecedor</th><th>Unid.</th><th>Multiplicador</th></tr></thead>
+        <tbody>${d.rows.map((r, i) => `<tr>
+          <td data-l="Cód.">${r.cod}</td><td data-l="Descrição (nossa)"><b>${r.desc}</b></td>
+          <td data-l="Cód. forn.">${r.codF}</td><td data-l="Desc. fornecedor">${r.descF}</td>
+          <td data-l="Unid."><span class="unit" title="${UNIDADES[r.un] || ''}">${r.un}</span></td>
+          <td data-l="Multiplicador"><input class="minput" id="m-${i}" inputmode="decimal" autocomplete="off" aria-label="Multiplicador de ${r.desc}"></td>
+        </tr>`).join('')}</tbody>
+      </table></div>
+      <div id="wmsg"></div>
+      <div class="wbtns"><button class="wbtn go" id="gravar">Gravar</button></div>
+    </div>`;
+  const inputs = $$('.minput', el);
+  const val = s => parseFloat(String(s).trim().replace(',', '.'));
+  inputs.forEach((inp, i) => {
+    inp.addEventListener('input', () => inp.classList.toggle('filled', inp.value.trim() !== ''));
+    inp.addEventListener('keydown', e => { if (e.key === 'Enter') { e.preventDefault(); inputs[i + 1] ? inputs[i + 1].focus() : $('#gravar', el).click(); } });
+  });
+  $('#gravar', el).onclick = () => {
+    const missing = inputs.filter(inp => isNaN(val(inp.value)));
+    if (missing.length) {
+      const w = $('#win', el); w.classList.remove('shake'); void w.offsetWidth; w.classList.add('shake'); sfx.bad();
+      $('#wmsg', el).innerHTML = `<div class="wmsg">Digite um número no multiplicador de todos os itens (faltam ${missing.length}).</div>`;
+      missing[0].focus();
+      return;
+    }
+    $('#wmsg', el).innerHTML = '';
+    let ok = 0;
+    const lines = d.rows.map((r, i) => {
+      const inp = inputs[i], g = val(inp.value), y = Math.abs(g - r.mult) < 1e-6;
+      ok += y; inp.classList.remove('filled'); inp.classList.add(y ? 'ok' : 'bad'); inp.disabled = true;
+      inp.closest('tr').insertAdjacentHTML('afterend', `<tr class="mwhy"><td colspan="6"><span class="exp ${y ? '' : 'no'}">${y ? '✓' : '✗ certo: ' + r.mult + ' ·'}</span> ${r.why}</td></tr>`);
+      return { label: `${r.desc} (${r.un})`, given: String(inp.value).trim(), expected: String(r.mult), ok: y };
+    });
+    $('#gravar', el).disabled = true;
+    later(() => done({ title: 'Multiplicador', frac: ok / d.rows.length, lines, why: 'UN ou KG: multiplicador 1. Caixa, display, pacote ou fardo: quantas das nossas unidades vêm dentro. Se a caixa vem em quilo e vendemos uma unidade com peso fixo, divida o peso da caixa pelo peso da nossa unidade. Se vendemos a quilo, o multiplicador é o peso da caixa.' }), 700);
   };
 };
 

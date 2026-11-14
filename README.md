@@ -1,10 +1,10 @@
 # Lança Certo
 
-Jogo de quiz para treinar a entrada de nota fiscal na Unidade Morada do Sol (Frigorífico Amazonas). As regras vêm do guia de faturamento (`guia-faturamento-morada-do-sol.html` / `.pdf`) e das orientações da equipe.
+Jogo de quiz para treinar a entrada de nota fiscal na Unidade Morada do Sol (Frigorífico Amazonas). As regras vêm do guia de faturamento (`guia-faturamento-morada-do-sol.pdf`) e das orientações da equipe.
 
 ## Como abrir
 
-Dê dois cliques em `lanca-certo.html`. Abre em qualquer navegador (Chrome, Edge, Firefox) no computador ou no celular. Não precisa instalar nada.
+Dê dois cliques em `index.html`. Abre em qualquer navegador (Chrome, Edge, Firefox) no computador ou no celular. Não precisa instalar nada.
 
 Sem internet o jogo funciona normalmente, só que as fontes do Google não carregam e o navegador usa as fontes padrão do sistema.
 
@@ -12,20 +12,19 @@ Sem internet o jogo funciona normalmente, só que as fontes do Google não carre
 
 ```
 Joguinhos-faturamento/
-├── lanca-certo.html                     página do jogo (só a marcação)
+├── index.html                           página do jogo (só a marcação)
 ├── css/
 │   └── lanca-certo.css                  estilos, tema claro/escuro e a réplica da tela do sistema
 ├── js/
 │   └── lanca-certo.js                   regras, perguntas e lógica do jogo
-├── guia-faturamento-morada-do-sol.html  guia original (fonte das regras)
-├── guia-faturamento-morada-do-sol.pdf
+├── guia-faturamento-morada-do-sol.pdf   guia original (fonte das regras)
 └── README.md
 ```
 
 ## Modos de jogo
 
-- **Partida completa:** 12 rodadas misturando todos os tipos. Tem combo (acertos seguidos multiplicam os pontos até 2×) e recorde salvo no navegador.
-- **Treino por fase:** escolha uma das 8 fases na tela inicial.
+- **Partida completa:** 13 rodadas misturando todos os tipos. Tem combo (acertos seguidos multiplicam os pontos até 2×) e recorde salvo no navegador.
+- **Treino por fase:** escolha uma das 9 fases na tela inicial.
 
 | Fase | O que treina |
 |---|---|
@@ -33,6 +32,7 @@ Joguinhos-faturamento/
 | Separe a mercadoria | Revenda, uso e consumo ou patrimônio, contra o relógio |
 | Macete do CST | 540 → 040 e CST no Simples Nacional |
 | CFOP certo | Troca de industrialização, serviço e transferência |
+| Multiplicador | Quantas unidades vêm na caixa, display ou pacote (tela Produto x Fornecedor) |
 | Verdadeiro ou falso | Afirmações do guia |
 | Confira o CNPJ | Achar o documento fora do CNPJ 19.234.190/0007-25 |
 | Markup na ponta do lápis | Custo × 1,6667 = preço de venda |
@@ -75,6 +75,18 @@ Atalhos no computador: teclas `1` a `4` para as opções, `V`/`F` no verdadeiro 
 
 Macete: CST com outro primeiro dígito (540, 640, 140, 560…) troca o primeiro dígito por 0.
 
+**Multiplicador (quantidade da embalagem)**
+
+| Unidade na nota do fornecedor | Multiplicador | Exemplo |
+|---|---|---|
+| UN ou KG | Sempre 1 | CAFE MELITTA 250G (UN) → 1 · LARANJA BAHIA (KG) → 1 |
+| CX, DP, PT, PC, PCT, EB | Quantas das nossas unidades vêm dentro | PEPSI LATA 269ML CX C/15 → 15 · ISQUEIRO BIC DP C/50 → 50 |
+| Caixa em quilo, nossa unidade com peso fixo | Peso da caixa ÷ peso da nossa unidade | PAO DE QUEIJO 400G × CX 10,4KG → 26 · produto 300G × CX 3KG → 10 |
+| Caixa de produto que vendemos a quilo | Peso da caixa em kg | FILÉ DE PEITO FRANGO KG × CX 15KG → 15 |
+| Embalagem com sub-embalagens | Multiplique | OVOS COM 18 × CX 360 OVOS → 20 cartelas · CX 5 DP × 10 → 50 |
+
+Os itens do jogo são produtos reais das entradas da Morada do Sol entre julho e novembro de 2026 (códigos nosso e do fornecedor vindos da tabela Produto x Fornecedor). As descrições do fornecedor foram escritas no padrão da nota para deixar a conta visível.
+
 **Financeiro:** boleto → conta corrente 45730, vencimento conforme o boleto físico. Transferência entre lojas → conta corrente 2, vencimento na data da entrada.
 
 ### Decisões que não estão no guia
@@ -96,6 +108,7 @@ Todo o conteúdo fica no início de `js/lanca-certo.js`, em listas fáceis de mu
 | `TF` | Verdadeiro ou falso: `[afirmação, true/false, explicação]` |
 | `MC` | Perguntas de múltipla escolha: `[pergunta, [opção certa, ...erradas], explicação]` |
 | `FIN_CASES` | Casos do financeiro |
+| `MULT` | Itens do multiplicador: `[nosso cód., nossa descrição, cód. fornecedor, descrição do fornecedor, unidade, multiplicador, grupo, explicação]` |
 | `CNPJ_LOJA`, `CNPJ_WRONG` | CNPJ correto da loja e as variações erradas |
 
 As cores e fontes ficam no bloco `:root` no início de `css/lanca-certo.css`.
